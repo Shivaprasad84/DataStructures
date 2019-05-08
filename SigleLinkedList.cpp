@@ -89,7 +89,20 @@ public:
         return this->at(index);
     }
 
-    void display()
+    void delete_at(int pos)
+    {
+        size--;
+        node* trav = head;
+        for(int i = 0; i < pos - 1; i++)
+        {
+            trav = trav->next;
+        }
+        node* temp = trav->next;
+        trav->next = (trav->next)->next;
+        delete temp;
+    }
+
+    void display() const
     {
         node *trav = head;
         for (int i = 0; i < size; i++)
@@ -97,6 +110,12 @@ public:
             cout << trav->data << ", ";
             trav = trav->next;
         }
+        cout << endl;
+    }
+
+    const int getSize() const
+    {
+        return this->size;
     }
 };
 
@@ -109,5 +128,7 @@ int main()
     }
 
     L1.insert_at(0, 100);
+    L1.display();
+    L1.delete_at(3);
     L1.display();
 }
