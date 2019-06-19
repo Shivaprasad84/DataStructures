@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+
+class Graph
+{
+    private:
+        int V;
+        vector<int>* adj = new vector<int>[V];
+    public:
+        Graph(int V):V(V){}
+
+        void addEdge(int u, int v);
+
+        void BFS(int start_node);
+
+        void DFS(int start_node);
+
+        void DFSUtil(int start_node, bool* visited);
+};
+
+void Graph::addEdge(int u, int v)
+{
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+void Graph::BFS(int start_node)
+{
+    bool visited[V];
+    for(int i = 0; i < V; ++i)
+        visited[i] = false;
+    queue<int> q;
+
+    visited[start_node] = true;
+    q.push(start_node);
+
+    while(!q.empty())
+    {
+        int s = q.front();
+        q.pop();
+        cout << s << " ";
+        for(vector<int>::iterator it = adj[s].begin(); it != adj[s].end(); ++it)
+        {
+            if(!visited[*it])
+            {
+                visited[*it] = true;
+                q.push(*it);
+            }
+        }
+    }
+}
+
+void Graph::DFS(int start_node)
+{
+    bool visited[V];
+    for(int i = 0; i < V; i++)
+        visited[i] = false;
+    DFSUtil(start_node, visited);
+}
+
+void Graph::DFSUtil(int start_node, bool* visited)
+{
+    visited[start_node] = true;
+    cout << start_node << " ";
+
+    for(vector<int>::iterator it = adj[start_node].begin(); it != adj[start_node].end(); ++it)
+    {
+        if(!visited[*it])
+            DFSUtil(*it, visited);
+    }
+}
+
+int main()
+{
+    Graph g(5);
+    g.addEdge(0, 1);
+    g.addEdge(0, 3);
+    g.addEdge(0, 4);
+    g.addEdge(1, 2);
+    g.addEdge(2, 3);
+    g.addEdge(3, 4);
+    int start;
+    cout << "Enter the starting node: ";
+    cin >> start;
+    g.BFS(start);
+
+    cout << endl;
+
+    g.DFS(start);
+
+}
