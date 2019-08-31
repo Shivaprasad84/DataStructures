@@ -8,4 +8,5 @@
     <li>Graph</li>
     <li>Breadth first Search</li>
     <li>Depth first Search</li>
+    <li>Dijkstra's Algorithm for Single Source Shortest Path</li>
 </ul>
